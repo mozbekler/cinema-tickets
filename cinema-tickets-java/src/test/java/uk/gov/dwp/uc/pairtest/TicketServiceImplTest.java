@@ -2,7 +2,7 @@ package uk.gov.dwp.uc.pairtest;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
+
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -12,7 +12,6 @@ import thirdparty.seatbooking.SeatReservationService;
 import uk.gov.dwp.uc.pairtest.domain.TicketTypeRequest;
 import uk.gov.dwp.uc.pairtest.exception.InvalidPurchaseException;
 
-import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 
 class TicketServiceImplTest {
@@ -38,7 +37,7 @@ class TicketServiceImplTest {
 
         ticketService.purchaseTickets(123L, ticketTypeRequests);
 
-        verify(ticketPaymentService, times(1)).makePayment(123L, 40); // Assuming ticket price for ADULT is 50
+        verify(ticketPaymentService, times(1)).makePayment(123L, 40);
         verify(seatReservationService, times(1)).reserveSeat(123L, 2);
     }
 
@@ -47,9 +46,7 @@ class TicketServiceImplTest {
         TicketTypeRequest ticketTypeRequest = new TicketTypeRequest(TicketTypeRequest.Type.ADULT, 2);
         TicketTypeRequest[] ticketTypeRequests = {ticketTypeRequest};
 
-        Assertions.assertThrows(InvalidPurchaseException.class, () -> {
-            ticketService.purchaseTickets(null, ticketTypeRequests);
-        });
+        Assertions.assertThrows(InvalidPurchaseException.class, () -> ticketService.purchaseTickets(null, ticketTypeRequests));
 
         Mockito.verifyNoInteractions(ticketPaymentService);
         Mockito.verifyNoInteractions(seatReservationService);
@@ -60,9 +57,7 @@ class TicketServiceImplTest {
         TicketTypeRequest ticketTypeRequest = new TicketTypeRequest(TicketTypeRequest.Type.CHILD, 2);
         TicketTypeRequest[] ticketTypeRequests = {ticketTypeRequest};
 
-        Assertions.assertThrows(InvalidPurchaseException.class, () -> {
-            ticketService.purchaseTickets(123L, ticketTypeRequests);
-        });
+        Assertions.assertThrows(InvalidPurchaseException.class, () -> ticketService.purchaseTickets(123L, ticketTypeRequests));
 
         Mockito.verifyNoInteractions(ticketPaymentService);
         Mockito.verifyNoInteractions(seatReservationService);
@@ -73,9 +68,7 @@ class TicketServiceImplTest {
         TicketTypeRequest ticketTypeRequest = new TicketTypeRequest(TicketTypeRequest.Type.ADULT, 21);
         TicketTypeRequest[] ticketTypeRequests = {ticketTypeRequest};
 
-        Assertions.assertThrows(InvalidPurchaseException.class, () -> {
-            ticketService.purchaseTickets(123L, ticketTypeRequests);
-        });
+        Assertions.assertThrows(InvalidPurchaseException.class, () -> ticketService.purchaseTickets(123L, ticketTypeRequests));
 
         Mockito.verifyNoInteractions(ticketPaymentService);
         Mockito.verifyNoInteractions(seatReservationService);

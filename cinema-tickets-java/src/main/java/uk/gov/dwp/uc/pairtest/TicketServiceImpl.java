@@ -48,12 +48,14 @@ public class TicketServiceImpl implements TicketService {
                 .map(TicketTypeRequest::getTicketType)
                 .anyMatch(e -> e.equals(TicketTypeRequest.Type.ADULT));
 
-        if (!anyAdultTickets) throw new InvalidPurchaseException("There must be at least one adult to purchase tickets");
+        if (!anyAdultTickets)
+            throw new InvalidPurchaseException("There must be at least one adult to purchase tickets");
 
         int totalNoOfTickets = Arrays.stream(ticketTypeRequests).map(TicketTypeRequest::getNoOfTickets)
                 .reduce(0, Integer::sum);
 
-        if (totalNoOfTickets > 20) throw new InvalidPurchaseException("There can not be more than 20 tickets in a purchase");
+        if (totalNoOfTickets > 20)
+            throw new InvalidPurchaseException("There can not be more than 20 tickets in a purchase");
     }
 
 }
