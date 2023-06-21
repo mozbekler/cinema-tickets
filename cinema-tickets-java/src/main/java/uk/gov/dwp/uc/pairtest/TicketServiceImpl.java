@@ -44,6 +44,8 @@ public class TicketServiceImpl implements TicketService {
     private void validatePurchase(Long accountId, TicketTypeRequest[] ticketTypeRequests) {
         if (accountId == null || accountId <= 0) throw new InvalidPurchaseException("Invalid Account Id");
 
+        if (ticketTypeRequests == null) throw new InvalidPurchaseException("Ticket Type Requests can not be null");
+
         boolean anyAdultTickets = Arrays.stream(ticketTypeRequests)
                 .map(TicketTypeRequest::getTicketType)
                 .anyMatch(e -> e.equals(TicketTypeRequest.Type.ADULT));
