@@ -87,4 +87,27 @@ class TicketServiceImplTest {
         Mockito.verifyNoInteractions(ticketPaymentService);
         Mockito.verifyNoInteractions(seatReservationService);
     }
+
+    @Test
+    void purchaseTickets_nullTicketTypeRequests_throwsException(){
+        TicketTypeRequest[] ticketTypeRequests = null;
+
+        Assertions.assertThrows(InvalidPurchaseException.class, () -> ticketService.purchaseTickets(123L, ticketTypeRequests));
+
+        Mockito.verifyNoInteractions(ticketPaymentService);
+        Mockito.verifyNoInteractions(seatReservationService);
+    }
+
+    @Test
+    void purchaseTickets_someTicketTypeRequestsAreNull_throwsException(){
+        TicketTypeRequest ticketTypeRequest = new TicketTypeRequest(TicketTypeRequest.Type.ADULT, 1);
+        TicketTypeRequest ticketTypeRequest2 = new TicketTypeRequest(TicketTypeRequest.Type.CHILD, 5);
+        TicketTypeRequest ticketTypeRequest3 = null;
+        TicketTypeRequest[] ticketTypeRequests = {ticketTypeRequest,ticketTypeRequest2,ticketTypeRequest3};
+
+        Assertions.assertThrows(NullPointerException.class, () -> ticketService.purchaseTickets(123L, ticketTypeRequests));
+
+        Mockito.verifyNoInteractions(ticketPaymentService);
+        Mockito.verifyNoInteractions(seatReservationService);
+    }
 }
