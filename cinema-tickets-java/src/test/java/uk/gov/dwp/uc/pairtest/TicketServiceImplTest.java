@@ -105,7 +105,7 @@ class TicketServiceImplTest {
         TicketTypeRequest ticketTypeRequest3 = null;
         TicketTypeRequest[] ticketTypeRequests = {ticketTypeRequest,ticketTypeRequest2,ticketTypeRequest3};
 
-        Assertions.assertThrows(NullPointerException.class, () -> ticketService.purchaseTickets(123L, ticketTypeRequests));
+        Assertions.assertThrows(InvalidPurchaseException.class, () -> ticketService.purchaseTickets(123L, ticketTypeRequests));
 
         Mockito.verifyNoInteractions(ticketPaymentService);
         Mockito.verifyNoInteractions(seatReservationService);
