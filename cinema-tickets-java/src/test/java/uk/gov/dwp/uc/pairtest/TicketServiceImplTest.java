@@ -40,6 +40,20 @@ class TicketServiceImplTest {
         verify(ticketPaymentService, times(1)).makePayment(123L, 40);
         verify(seatReservationService, times(1)).reserveSeat(123L, 2);
     }
+    @Test
+    void purchaseTickets_validPurchase_success2() throws InvalidPurchaseException {
+
+        TicketTypeRequest ticketTypeRequest = new TicketTypeRequest(TicketTypeRequest.Type.ADULT, 1);
+        TicketTypeRequest ticketTypeRequest2 = new TicketTypeRequest(TicketTypeRequest.Type.CHILD, 5);
+        TicketTypeRequest ticketTypeRequest3 = new TicketTypeRequest(TicketTypeRequest.Type.INFANT, 1);
+        TicketTypeRequest[] ticketTypeRequests = {ticketTypeRequest,ticketTypeRequest2,ticketTypeRequest3};
+
+        ticketService.purchaseTickets(123L, ticketTypeRequests);
+
+        verify(ticketPaymentService, times(1)).makePayment(123L, 70);
+        verify(seatReservationService, times(1)).reserveSeat(123L, 6);
+    }
+
 
     @Test
     void purchaseTickets_invalidAccountId_throwsException() {
