@@ -29,7 +29,7 @@ public class TicketServiceImpl implements TicketService {
         validatePurchase(accountId, ticketTypeRequests);
 
         for (TicketTypeRequest request : ticketTypeRequests) {
-            totalAmountToPay = TicketPrice.getTicketPrice(request.getTicketType()) * request.getNoOfTickets();
+            totalAmountToPay += TicketPrice.getTicketPrice(request.getTicketType()) * request.getNoOfTickets();
 
             if (!request.getTicketType().equals(TicketTypeRequest.Type.INFANT)) {
                 totalSeatsToAllocate += request.getNoOfTickets();
